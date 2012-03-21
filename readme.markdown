@@ -4,7 +4,7 @@ The awesomeCloud plugin creates a word cloud using the HTML5 `canvas` element, u
 
 ## Requirements
 
-* jQuery 1.8+
+* jQuery 1.7+
 * browser that supports the `canvas` element
 
 ## Usage
