@@ -61,6 +61,7 @@ Extra Thanks:
  */
 
 ( function( $ ) {
+	"use strict";
 	var pluginName = "awesomeCloud", // name of the plugin, mainly for canvas IDs
 	defaultSettings = {
 		"size" : {
@@ -86,14 +87,11 @@ Extra Thanks:
 	$.fn.awesomeCloud = function( option, settings ) {
 		if ( typeof option === "object" ) {
 			settings = option;
-		} else if ( typeof option == "string" ) {
+		} else if ( typeof option === "string" ) {
 			var data = this.data( "_" + pluginName );
 			if ( data ) {
 				if ( defaultSettings[ option ] !== undefined ) {
 					if ( settings !== undefined ) {
-						if ( option == "title" ) {
-							data.content.html( settings );
-						}
 						data.settings[ option ] = settings;
 						return true;
 					} else {
@@ -112,7 +110,7 @@ Extra Thanks:
 		return this.each( function() {
 			var elem = $( this ),
 			$settings = jQuery.extend( true, {}, settings ),
-			cloud = new awesomeCloud( $settings, elem );
+			cloud = new AwesomeCloud( $settings, elem );
 
 			cloud.create();
 
@@ -120,7 +118,7 @@ Extra Thanks:
 		} );
 	};
 
-	function awesomeCloud( settings, elem ) {
+	function AwesomeCloud( settings, elem ) {
 		this.bctx = null;
 		this.bgPixel = null;
 		this.ctx = null;
@@ -135,7 +133,7 @@ Extra Thanks:
 		return this;
 	}
 
-	awesomeCloud.prototype = {
+	AwesomeCloud.prototype = {
 		create: function() {
 			var $this = this,
 			i = 0,
@@ -647,7 +645,7 @@ Extra Thanks:
 		},
 		colorToRGBA: function( color ) {
 			color = color.replace( /^\s*#|\s*$/g, "" );
-			if ( color.length == 3 ) {
+			if ( color.length === 3 ) {
 				color = color.replace( /(.)/g, "$1$1" );
 			}
 			color = color.toLowerCase();
@@ -847,7 +845,7 @@ Extra Thanks:
 			],
 			r, g, b, a, key, i, re, processor, bits, channels;
 			for ( key in named_colors ) {
-				if ( color == key ) {
+				if ( color === key ) {
 					color = named_colors[ key ];
 				}
 			}
@@ -881,6 +879,7 @@ Extra Thanks:
 
 // http://jsfromhell.com/array/shuffle
 Array.prototype.shuffle = function () {
+	"use strict";
 	for ( var j, x, i = this.length; i; j = parseInt( Math.random() * i, 10 ), x = this[ --i ], this[ i ] = this[ j ], this[ j ] = x );
 	return this;
 };
@@ -888,6 +887,7 @@ Array.prototype.shuffle = function () {
 // setImmediate polyfill.
 if ( !window.setImmediate ) {
 	window.setImmediate = ( function () {
+		"use strict";
 		return window.msSetImmediate || window.webkitSetImmediate || window.mozSetImmediate || window.oSetImmediate || ( function () {
 			// setZeroTimeout: "hack" based on postMessage
 			// modified from http://dbaron.org/log/20100309-faster-timeouts
@@ -906,7 +906,7 @@ if ( !window.setImmediate ) {
 				},
 				handleMessage = function ( event ) {
 					// Skipping checking event source, IE confused this window object with another in the presence of iframe
-					if ( /*event.source == window && */event.data == messageName ) {
+					if ( /*event.source === window && */event.data === messageName ) {
 						event.stopPropagation();
 						if ( timeouts.length > 0 ) {
 							var fn = timeouts.shift();
@@ -935,6 +935,7 @@ if ( !window.setImmediate ) {
 }
 if ( !window.clearImmediate ) {
 	window.clearImmediate = ( function () {
+		"use strict";
 		return window.msClearImmediate || window.webkitClearImmediate || window.mozClearImmediate || window.oClearImmediate || function ( timer ) {
 			// "clearZeroTimeout" is implement on the previous block ||
 			// fallback
