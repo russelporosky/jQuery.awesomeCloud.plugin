@@ -461,7 +461,8 @@ Extra Thanks:
                     //is the mouse over the link?
                     if($this.lTable[x] != undefined && $this.lTable[x][y] != undefined){
                         $this.match = $this.lTable[x][y];
-                        document.body.style.cursor = "pointer";
+                        if($this.match.link != null) document.body.style.cursor = "pointer";
+                        else document.body.style.cursor = "";
                     } else{
                         $this.match = null;
                         document.body.style.cursor = "";
