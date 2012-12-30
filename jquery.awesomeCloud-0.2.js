@@ -131,8 +131,7 @@ Extra Thanks:
         this.settings = settings;
         this.size = null;
         this.words = [];
-        this.lTableX = {};
-        this.lTableY = {};
+        this.lTable = {};
         return this;
     }
 
@@ -459,36 +458,13 @@ Extra Thanks:
                     y+= $(canvasDOM).position().top;
                     y = Math.floor(y);
                     //is the mouse over the link?
-                    if($this.lTableY.hasOwnProperty(y) && $this.lTableX.hasOwnProperty(x)){
-                        var match = "";
-                        $.each($this.lTableY[y], function(){
-                            var indexOfMatch = $.inArray(this,$this.lTableX[x]);
-                            if(indexOfMatch != -1 ){
-                                match = $this.lTableX[x][indexOfMatch];
-                                //break
-                                //http://api.jquery.com/jQuery.each/
-                                return false;
-                            }
-                        })
-                        if(match != ""){
-                            document.body.style.cursor = "pointer";
-                        } else {
-                            document.body.style.cursor = "";
-                        }
+                    if($this.lTable[x] != undefined && $this.lTable[x][y] != undefined){
+                        var match = $this.lTable[x][y];
+                        document.body.style.cursor = "pointer";
                     } else{
                         document.body.style.cursor = "";
-                    //    inLink=false;
                     }
-                    //if(x>=linkX && x <= (linkX + linkWidth) && y<=linkY && y>= (linkY-linkHeight)){
-                    //    document.body.style.cursor = "pointer";
-                    //    inLink=true;
-                    //}
-                    //else{
-                    //    document.body.style.cursor = "";
-                    //    inLink=false;
-                    //}
-                }
-                , false);
+                }, false);
         },
         minimumFontSize : function() {
             var ctxID = pluginName + "FontTest",
@@ -541,8 +517,9 @@ Extra Thanks:
             var $this = this,
             rotate = ( Math.random() < this.settings.options.rotationRatio ),
             fontSize = this.settings.weightFactor( weight ),
-            h = null,
-            w = null,
+            h = null, w = null,
+            mapIndicesX, mapIndicesY,
+            x_index, y_index, new_obj = {},
             font, X, Y, gw, gh, center, R, T, r, t, rx, fc, fctx, ctxID, points;
             if ( fontSize <= this.settings.minSize ) {
                 return false;
@@ -616,22 +593,18 @@ Extra Thanks:
                                 h= getTextHeight(font).height;
                                 w= $this.ctx.measureText(word).width;
                             }
-                            var mapIndices = spacedArray(X, X+w, 0);
-                            for ( var idx = 0; idx < mapIndices.length; idx++){
-                                var index = mapIndices[idx];
-                                if($this.lTableX.hasOwnProperty(index)) {
-                                    $this.lTableX[index].push(word);
-                                } else {
-                                    $this.lTableX[index] = [word];
-                                }
-                            }
-                            var mapIndices = spacedArray(Y, Y+h, 0);
-                            for ( var idx = 0; idx < mapIndices.length; idx++){
-                                var index = mapIndices[idx];
-                                if($this.lTableY.hasOwnProperty(index)) {
-                                    $this.lTableY[index].push(word);
-                                } else {
-                                    $this.lTableY[index] = [word];
+                            // Build Lookup Table
+                            // lTable[x][y]
+                            mapIndicesX = spacedArray(X, X+w, 0);
+                            mapIndicesY = spacedArray(Y, Y+h, 0);
+                            for ( var idx = 0; idx < mapIndicesX.length; idx++){
+                                x_index = mapIndicesX[idx];
+                                if(!$this.lTable.hasOwnProperty(x_index)) $this.lTable[x_index]={};
+                                for ( var idy = 0; idy < mapIndicesY.length; idy++){
+                                    y_index = mapIndicesY[idy];
+                                    //Each position will have only one word
+                                    new_obj = {"word":word, "link":link};
+                                    $this.lTable[x_index][y_index]= new_obj;
                                 }
                             }
                             $this.updateGrid( gxy[ 0 ], gxy[ 1 ], gw, gh );
