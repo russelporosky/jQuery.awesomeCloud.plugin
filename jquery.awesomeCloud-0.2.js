@@ -132,6 +132,7 @@ Extra Thanks:
         this.size = null;
         this.words = [];
         this.lTable = {};
+        this.match  = null;
         return this;
     }
 
@@ -459,12 +460,16 @@ Extra Thanks:
                     y = Math.floor(y);
                     //is the mouse over the link?
                     if($this.lTable[x] != undefined && $this.lTable[x][y] != undefined){
-                        var match = $this.lTable[x][y];
+                        $this.match = $this.lTable[x][y];
                         document.body.style.cursor = "pointer";
                     } else{
+                        $this.match = null;
                         document.body.style.cursor = "";
                     }
                 }, false);
+            canvasDOM.addEventListener("click", function(ev){
+                if($this.match!=null) window.location = $this.match.link;
+            }, false);
         },
         minimumFontSize : function() {
             var ctxID = pluginName + "FontTest",
