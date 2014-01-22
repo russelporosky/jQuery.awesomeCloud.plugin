@@ -1,6 +1,6 @@
 # awesomeCloud - jQuery Plugin
 
-The awesomeCloud plugin creates a word cloud using the HTML5 `canvas` element, using a wordlist that exists on your page.
+The awesomeCloud plugin creates a word or tag cloud using the HTML5 `canvas` element, using a wordlist that exists on your page.
 
 ## Requirements
 
@@ -15,7 +15,7 @@ The awesomeCloud plugin creates a word cloud using the HTML5 `canvas` element, u
 
 	$( "#wordCloudContainer" ).awesomeCloud( settings );
 
-awesomeCloud assumes that each child of the container is an HTML element with a `data-weight` attribute containing an integer or decimal value that reflects it's "weight", and the content of the element is the word. For example, `<span data-weight="12">first</span>` is a valid child.
+awesomeCloud assumes that each child of the container is an HTML element with a `data-weight` attribute containing an integer or decimal value that reflects it's "weight", and the content of the element is the word. For example, `<span data-weight="12">first</span>` is a valid child, as is `<span data-weight="12"><a href="http://indyarmy.com/">second</a></span>`.
 
 ## Settings
 
