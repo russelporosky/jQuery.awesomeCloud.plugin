@@ -42,15 +42,3 @@ publish
 # build script local files
 build/buildinfo.properties
 build/config/buildinfo.properties
-
-# Force Framework generated files
-/nginx
-/redis
-/mysql
-/log
-/instance.force
-/tasks.force
-/Setup/Current.php
-/TEMP/
-
-/www/test/
