@@ -683,14 +683,18 @@ Extra Thanks:
 			return output;
 		},
 		updateGrid: function (gx, gy, gw, gh, skipDiffChannel) {
-			var x = gw, y, imgData = this.ctx.getImageData(gx * this.settings.gridSize, gy * this.settings.gridSize, gw * this.settings.gridSize, gh * this.settings.gridSize);
-			while (x--) {
-				y = gh;
-				while (y--) {
-					if (!this.isGridEmpty(imgData, x * this.settings.gridSize, y * this.settings.gridSize, gw * this.settings.gridSize, gh * this.settings.gridSize, skipDiffChannel)) {
-						this.grid[ gx + x ][ gy + y ] = false;
+			try {
+				var x = gw, y, imgData = this.ctx.getImageData(gx * this.settings.gridSize, gy * this.settings.gridSize, gw * this.settings.gridSize, gh * this.settings.gridSize);
+				while (x--) {
+					y = gh;
+					while (y--) {
+						if (!this.isGridEmpty(imgData, x * this.settings.gridSize, y * this.settings.gridSize, gw * this.settings.gridSize, gh * this.settings.gridSize, skipDiffChannel)) {
+							this.grid[ gx + x ][ gy + y ] = false;
+						}
 					}
-				}
+				}				
+			} catch(e) {
+				return
 			}
 		},
 		isGridEmpty: function (imgData, x, y, w, h, skipDiffChannel) {
