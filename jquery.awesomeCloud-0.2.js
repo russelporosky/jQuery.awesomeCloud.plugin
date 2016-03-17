@@ -58,7 +58,7 @@ Extra Thanks:
     Thanks to http://www.websanova.com/tutorials/jquery/jquery-plugin-development-boilerplate
     for providing a great boilerplate I could use for my first jQuery plugin.
     My original layout worked, but this one was much better.
- */
+*/
 
 
 (function ($) {
@@ -519,6 +519,7 @@ Extra Thanks:
 			var canvasID = options.id, canvasDOM, parent = $("body");
 			if (options.parent !== undefined) {
 				parent = options.parent;
+				parent.css("overflow", "hidden");
 			}
 			parent.append("<canvas id=\"" + canvasID + "\" width=\"" + options.width + "\" height=\"" + options.height + "\">.</canvas>");
 			$("#" + canvasID).css("visibility", "hidden");
