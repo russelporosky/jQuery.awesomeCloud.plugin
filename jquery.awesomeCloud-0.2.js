@@ -449,12 +449,13 @@ Extra Thanks:
 		},
 		allDone: function (canvasID) {
 			// $this.linkTable
-			var $this = this,
-				canvasDOM = document.getElementById(canvasID);
-			$( "#" + canvasID ).width( this.size.screenWidth );
-			$( "#" + canvasID ).height( this.size.screenHeight );
-			$( "#" + canvasID ).css( "display", "block" );
-			$( "#" + canvasID ).css( "visibility", "visible" );
+			var $this = this, canvasDOM = document.getElementById(canvasID), canvas = $( "#" + canvasID );
+			canvas.width( this.size.screenWidth );
+			canvas.height( this.size.screenHeight );
+			canvas.css({
+				"display": "block",
+				"visibility": "visible"
+			});
 
 			canvasDOM.addEventListener("mousemove", function (ev) {
 				var x = 0, y = 0;
@@ -516,19 +517,21 @@ Extra Thanks:
 			return 0;
 		},
 		createCanvas: function (options) {
-			var canvasID = options.id, canvasDOM, parent = $("body");
+			var canvasID = options.id, canvasDOM, parent = $("body"), canvas = $("#" + canvasID);
 			if (options.parent !== undefined) {
 				parent = options.parent;
 				parent.css("overflow", "hidden");
 			}
 			parent.append("<canvas id=\"" + canvasID + "\" width=\"" + options.width + "\" height=\"" + options.height + "\">.</canvas>");
-			$("#" + canvasID).css("visibility", "hidden");
-			$("#" + canvasID).css("display", "none");
-			$("#" + canvasID).css("position", "relative");
-			$("#" + canvasID).css("z-index", 10000);
-			$("#" + canvasID).width(options.width);
-			$("#" + canvasID).height(options.height);
-			$("#" + canvasID).offset({ top: options.top, left: options.left });
+			canvas.css({
+				"visibility": "hidden",
+				"display": "none",
+				"position": "relative",
+				"z-index": 10000
+			});
+			canvas.width(options.width);
+			canvas.height(options.height);
+			canvas.offset({ top: options.top, left: options.left });
 			canvasDOM = document.getElementById(canvasID);
 			canvasDOM.setAttribute("width", options.width);
 			canvasDOM.setAttribute("height", options.height);
